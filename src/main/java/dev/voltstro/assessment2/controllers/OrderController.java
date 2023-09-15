@@ -75,7 +75,7 @@ public class OrderController {
                 return "redirect:/orders/";
 
             //Get all products
-            model.addAttribute("products", productsService.getAllProducts());
+            model.addAttribute("products", productsService.getAllEnabledProducts());
             model.addAttribute("newProduct", new NewProductModel());
 
             //Get all order items
@@ -103,6 +103,7 @@ public class OrderController {
             return "redirect:/orders/edit/" + order.getId() + "/";
         }
 
+        orderService.saveOrder(order);
         return "redirect:/orders/";
     }
 

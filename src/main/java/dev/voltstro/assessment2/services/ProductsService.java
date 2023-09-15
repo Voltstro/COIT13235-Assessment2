@@ -29,8 +29,12 @@ public class ProductsService {
         return productRepository.findAll();
     }
 
+    public List<Product> getAllEnabledProducts() {
+        return productRepository.getAllEnabledProducts();
+    }
+
     public List<Product> getAllProducts(String searchName) {
-        //Ideally you would be doing this in WHERE SQL clause on the DB.
+        //Ideally you would be doing this in WHERE SQL clause on the DB, but IDK how to search names like this in mysql
         List<Product> allProducts = getAllProducts();
 
         ArrayList<Product> foundProducts = new ArrayList<>();
