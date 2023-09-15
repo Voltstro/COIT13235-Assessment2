@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{_layout.html}">
+<body>
+<section layout:fragment="content">
+  <div class="container">
+    <div class="card mt-3">
+      <h6 class="card-header">Confirm Deletion</h6>
+
+      <div class="card-body">
+        <p>Are you sure you want to delete?</p>
+        <p>This will remove any order items that contain this product!</p>
+        <p class="text-danger">This action cannot be undone!</p>
+
+        <div>
+          <a class="btn btn-secondary" href="/orders/">
+            Cancel
+          </a>
+
+          <a class="btn btn-danger" th:href="@{/products/delete/{productId}/confirm/ (productId=${productId})}">
+            Confirm
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</body>
+</html>

@@ -77,4 +77,22 @@ public class ProductController {
         productsService.saveProduct(product);
         return "redirect:/products/";
     }
+
+    @GetMapping("/products/delete/{productId}/")
+    public String deleteProduct(@PathVariable Long productId, Model model) {
+        Product product = productsService.getProductById(productId);
+
+        //Make sure product is real
+        if(product == null)
+            return "redirect:/products/";
+
+        model.addAttribute("productId", product.getId());
+        return "/products/delete";
+    }
+
+    @GetMapping("/products/delete/{productId}/confirm/")
+    public String deleteProductConfirm(@PathVariable Long productId) {
+        productsService.deleteProduct(productId);
+        return "redirect:/products/";
+    }
 }

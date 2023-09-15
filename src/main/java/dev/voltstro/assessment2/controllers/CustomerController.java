@@ -73,4 +73,22 @@ public class CustomerController {
         productsService.saveCustomer(customer);
         return "redirect:/customers/";
     }
+
+    @GetMapping("/customers/delete/{customerId}/")
+    public String deleteCustomer(@PathVariable Long customerId, Model model) {
+        Customer customer = productsService.getCustomerById(customerId);
+
+        //Make sure customer is real
+        if(customer == null)
+            return "redirect:/customers/";
+
+        model.addAttribute("orderId", customer.getId());
+        return "/customers/delete";
+    }
+
+    @GetMapping("/customers/delete/{customerId}/confirm/")
+    public String deleteCustomerConfirm(@PathVariable Long customerId) {
+        productsService.deleteCustomer(customerId);
+        return "redirect:/customers/";
+    }
 }

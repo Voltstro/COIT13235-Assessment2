@@ -36,7 +36,7 @@
                             <td th:text="${product.name}"></td>
                             <td>
                                 <a th:href="@{/products/edit/{id}/ (id=${product.id})}" class="btn btn-outline-primary">Edit</a>
-                                <a th:href="@{/products/edit/{id}/ (id=${product.id})}" class="btn btn-outline-danger">Delete</a>
+                                <a th:href="@{/products/delete/{id}/ (id=${product.id})}" class="btn btn-outline-danger">Delete</a>
                             </td>
                         </tr>
                     </tbody>

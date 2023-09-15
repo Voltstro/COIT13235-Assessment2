@@ -40,7 +40,7 @@
                         <td th:text="${order.customer.firstName + ' ' + order.customer.lastName}"></td>
                         <td>
                             <a th:href="@{/orders/edit/{id}/ (id=${order.id})}" class="btn btn-outline-primary">Edit</a>
-                            <a th:href="@{/orders/edit/{id}/ (id=${order.id})}" class="btn btn-outline-danger">Delete</a>
+                            <a th:href="@{/orders/delete/{id}/ (id=${order.id})}" class="btn btn-outline-danger">Delete</a>
                         </td>
                     </tr>
                     </tbody>

@@ -48,4 +48,8 @@ public class ProductsService {
 
         return foundProducts;
     }
+
+    public void deleteProduct(Long productId) {
+        productRepository.deleteById(productId);
+    }
 }

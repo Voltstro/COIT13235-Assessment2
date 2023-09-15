@@ -31,6 +31,9 @@ public class OrderController {
         this.orderItemService = orderItemService;
     }
 
+    /**
+     * Orders Index Page
+     */
     @GetMapping("/orders/")
     public String index(@RequestParam(required = false) Long customerId, Model model) {
 
@@ -44,6 +47,9 @@ public class OrderController {
         return "orders/index";
     }
 
+    /**
+     * Order Edit Page
+     */
     @GetMapping(value = {"/orders/edit/", "/orders/edit/{id}/"})
     public String edit(@PathVariable(required = false) Long id, Model model) {
         boolean isNew = id == null;
@@ -82,6 +88,9 @@ public class OrderController {
         return "orders/edit";
     }
 
+    /**
+     * Order Edit Post
+     */
     @PostMapping(value = {"/orders/edit/", "/orders/edit/{id}/"})
     public String edit(@PathVariable(required = false) Long id, @ModelAttribute("order") CustomerOrder order) {
 
@@ -97,6 +106,9 @@ public class OrderController {
         return "redirect:/orders/";
     }
 
+    /**
+     * Order Edit Add Product Post
+     */
     @PostMapping("/orders/edit/{orderId}/products/add/")
     public String addProduct(@PathVariable Long orderId, @ModelAttribute("newProduct") NewProductModel productModel) {
         //Get order
@@ -129,10 +141,31 @@ public class OrderController {
         return "redirect:/orders/edit/" + order.getId() + "/";
     }
 
+    /**
+     * Order Edit Product Remove
+     */
     @GetMapping("/orders/edit/{orderId}/products/remove/{orderItemId}/")
     public String removeProduct(@PathVariable Long orderId, @PathVariable Long orderItemId) {
         orderItemService.removeOrderItem(orderItemId);
 
         return "redirect:/orders/edit/" + orderId + "/";
+    }
+
+    @GetMapping("/orders/delete/{orderId}/")
+    public String deleteOrder(@PathVariable Long orderId, Model model) {
+        CustomerOrder order = orderService.getOrderById(orderId);
+
+        //Make sure order is real
+        if(order == null)
+            return "redirect:/orders/";
+
+        model.addAttribute("orderId", order.getId());
+        return "/orders/delete";
+    }
+
+    @GetMapping("/orders/delete/{orderId}/confirm/")
+    public String deleteOrderConfirm(@PathVariable Long orderId) {
+        orderService.deleteOrder(orderId);
+        return "redirect:/orders/";
     }
 }
