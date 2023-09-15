@@ -1,6 +1,5 @@
 package dev.voltstro.assessment2.services;
 
-import dev.voltstro.assessment2.entities.Customer;
 import dev.voltstro.assessment2.entities.CustomerOrder;
 import dev.voltstro.assessment2.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import java.util.Optional;
 
 @Service
 public class OrderService {
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     public OrderService(OrderRepository productRepository) {
         this.orderRepository = productRepository;

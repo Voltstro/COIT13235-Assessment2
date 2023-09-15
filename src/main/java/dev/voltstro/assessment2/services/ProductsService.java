@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class ProductsService {
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductsService(ProductRepository productRepository) {
         this.productRepository = productRepository;

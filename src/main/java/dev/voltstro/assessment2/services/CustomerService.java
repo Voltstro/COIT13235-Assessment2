@@ -1,7 +1,6 @@
 package dev.voltstro.assessment2.services;
 
 import dev.voltstro.assessment2.entities.Customer;
-import dev.voltstro.assessment2.entities.Product;
 import dev.voltstro.assessment2.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 

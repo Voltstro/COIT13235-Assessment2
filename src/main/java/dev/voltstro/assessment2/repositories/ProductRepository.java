@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM assignment02.product WHERE enabled = 1")
-    public List<Product> getAllEnabledProducts();
+    List<Product> getAllEnabledProducts();
 }
