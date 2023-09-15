@@ -1,0 +1,49 @@
+package dev.voltstro.assessment2.entities;
+
+import jakarta.persistence.*;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
+
+@Entity
+@Table(name="customer_order")
+public class CustomerOrder implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customerId) {
+        this.customer = customerId;
+    }
+
+    @OneToOne(optional = false)
+    private Customer customer;
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    private Date createdDate;
+
+    public CustomerOrder copyFrom(CustomerOrder order) {
+        this.customer = order.customer;
+        this.createdDate = order.createdDate;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+}
