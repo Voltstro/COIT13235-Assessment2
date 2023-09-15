@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assessment 2</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+</head>
+<body>
+
+<!-- NavBar -->
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Assessment 2</a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar"
+                    aria-controls="navbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav flex-grow">
+                    <li>
+                        <a class="nav-link" href="/products/">Products</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/customers/">Customers</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Main Content -->
+<main layout:fragment="content">
+    <!-- Page Content -->
+</main>
+
+<script type="module" src="/assets/js/bootstrap.min.js"></script>
+</body>
+</html>

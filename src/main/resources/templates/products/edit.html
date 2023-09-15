@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{_layout.html}">
+<body>
+<section layout:fragment="content">
+  <div class="container">
+    <div class="card mt-3">
+      <h6 class="card-header" th:if="${newProduct} == true">New Product</h6>
+      <h6 class="card-header" th:if="${newProduct} == false">Edit Product</h6>
+
+      <div class="card-body">
+        <form th:object = "${product}" th:action="${returnUrl}" method="POST">
+
+          <div class="row mb-3">
+            <!-- Code -->
+            <div class="col-2">
+              <label for="code">Product Code</label>
+              <input
+                      id="code"
+                      type="text"
+                      name="code"
+                      th:field="*{code}"
+                      class="form-control"
+                      placeholder="Enter Product Code"
+              />
+            </div>
+
+            <!-- Product Name -->
+            <div class="col-10">
+              <label for="name">Product Name</label>
+              <input
+                      id="name"
+                      type="text"
+                      name="name"
+                      th:field="*{name}"
+                      class="form-control"
+                      placeholder="Enter Product Name"
+              />
+            </div>
+          </div>
+
+          <!-- Enabled -->
+          <div class="mb-3 form-check form-switch">
+
+            <input
+                    checked
+                    id="enabled"
+                    type="checkbox"
+                    role="switch"
+                    name="enabled"
+                    th:field="*{enabled}"
+                    class="form-check-input"
+                    placeholder="Enabled"
+            />
+            <label class="form-check-label" for="enabled">Enabled</label>
+          </div>
+
+          <div>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+</body>
+</html>

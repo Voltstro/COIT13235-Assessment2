@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{_layout.html}">
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <div class="card mt-3">
+            <h6 class="card-header">Products</h6>
+            <div class="card-body">
+                <div class="row">
+                    <form class="d-flex col-10" th:object="${search}" th:action="@{/products/}" method="GET" >
+                        <input class="form-control me-2" type="search" placeholder="Search by name" name="search" th:value="${search}">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </form>
+
+                    <div class="col-2">
+                        <a class="btn btn-primary d-block" href="/products/edit/">Add</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Product Code</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="product: ${products}">
+                            <td th:text="${product.id}"></td>
+                            <td th:text="${product.code}"></td>
+                            <td th:text="${product.name}"></td>
+                            <td>
+                                <a th:href="@{/products/edit/{id}/ (id=${product.id})}" class="btn btn-outline-primary">Edit</a>
+                                <a th:href="@{/products/edit/{id}/ (id=${product.id})}" class="btn btn-outline-primary">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
