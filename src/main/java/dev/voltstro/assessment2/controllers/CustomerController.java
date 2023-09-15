@@ -9,17 +9,23 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller for customer endpoints (/customer/**)
+ */
 @Controller
 public class CustomerController {
-    private final CustomerService productsService;
+    private final CustomerService customerService;
 
     /**
-     * Creates a new ProductController instance
+     * Creates a new CustomerController instance
      */
-    public CustomerController(CustomerService productsService) {
-        this.productsService = productsService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
+    /**
+     * Customer index page endpoint
+     */
     @GetMapping("/customers/")
     public String index(@RequestParam(required = false) String search, Model model) {
         model.addAttribute("search", search);
@@ -27,15 +33,18 @@ public class CustomerController {
         //Get customers
         List<Customer> customers;
         if(Utils.isNullOrEmpty(search))
-            customers = productsService.getAllCustomers();
+            customers = customerService.getAllCustomers();
         else
-            customers = productsService.getAllCustomers(search);
+            customers = customerService.getAllCustomers(search);
 
         model.addAttribute("customers", customers);
 
         return "customers/index";
     }
 
+    /**
+     * Customer edit endpoint
+     */
     @GetMapping(value = {"/customers/edit/", "/customers/edit/{id}/"})
     public String edit(@PathVariable(required = false) Long id, Model model) {
         boolean isNew = id == null;
@@ -49,7 +58,7 @@ public class CustomerController {
             customer = new Customer();
             returnUrl = "/customers/edit/";
         } else { //Existing customer, set customer and returnUrl accordingly
-            customer = productsService.getCustomerById(id);
+            customer = customerService.getCustomerById(id);
             returnUrl = "/customers/edit/" + id + "/";
 
             //Customer was null, just go back to main page
@@ -62,21 +71,27 @@ public class CustomerController {
         return "customers/edit";
     }
 
+    /**
+     * Customer edit endpoint
+     */
     @PostMapping(value = {"/customers/edit/", "/customers/edit/{id}/"})
     public String edit(@PathVariable(required = false) Long id, @ModelAttribute("product") Customer customer) {
 
         if (id != null) {
             //Recreate customer, so ref is the same, and the persistence will actually save
-            customer = productsService.getCustomerById(id).copyFrom(customer);
+            customer = customerService.getCustomerById(id).copyFrom(customer);
         }
 
-        productsService.saveCustomer(customer);
+        customerService.saveCustomer(customer);
         return "redirect:/customers/";
     }
 
+    /**
+     * Customer delete endpoint
+     */
     @GetMapping("/customers/delete/{customerId}/")
     public String deleteCustomer(@PathVariable Long customerId, Model model) {
-        Customer customer = productsService.getCustomerById(customerId);
+        Customer customer = customerService.getCustomerById(customerId);
 
         //Make sure customer is real
         if(customer == null)
@@ -86,9 +101,12 @@ public class CustomerController {
         return "/customers/delete";
     }
 
+    /**
+     * Customer delete confirm endpoint
+     */
     @GetMapping("/customers/delete/{customerId}/confirm/")
     public String deleteCustomerConfirm(@PathVariable Long customerId) {
-        productsService.deleteCustomer(customerId);
+        customerService.deleteCustomer(customerId);
         return "redirect:/customers/";
     }
 }

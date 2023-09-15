@@ -24,6 +24,9 @@ public class ProductController {
         this.productsService = productsService;
     }
 
+    /**
+     * Products index endpoint
+     */
     @GetMapping("/products/")
     public String index(@RequestParam(required = false) String search, Model model) {
         model.addAttribute("search", search);
@@ -40,6 +43,9 @@ public class ProductController {
         return "products/index";
     }
 
+    /**
+     * Products edit endpoint
+     */
     @GetMapping(value = {"/products/edit/", "/products/edit/{id}/"})
     public String edit(@PathVariable(required = false) Long id, Model model) {
         boolean isNew = id == null;
@@ -67,6 +73,9 @@ public class ProductController {
         return "products/edit";
     }
 
+    /**
+     * Products edit post endpoint
+     */
     @PostMapping(value = {"/products/edit/", "/products/edit/{id}/"})
     public String edit(@PathVariable(required = false) Long id, @ModelAttribute("product") Product product) {
 
@@ -79,6 +88,9 @@ public class ProductController {
         return "redirect:/products/";
     }
 
+    /**
+     * Products delete endpoint
+     */
     @GetMapping("/products/delete/{productId}/")
     public String deleteProduct(@PathVariable Long productId, Model model) {
         Product product = productsService.getProductById(productId);
@@ -91,6 +103,9 @@ public class ProductController {
         return "/products/delete";
     }
 
+    /**
+     * Products delete confirmed endpoint
+     */
     @GetMapping("/products/delete/{productId}/confirm/")
     public String deleteProductConfirm(@PathVariable Long productId) {
         productsService.deleteProduct(productId);

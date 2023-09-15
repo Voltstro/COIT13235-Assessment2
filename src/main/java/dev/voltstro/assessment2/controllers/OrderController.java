@@ -212,12 +212,11 @@ public class OrderController {
         //If a Product changes it cost, minus/adding will have issues
         //This guarantees it to be accurate
         List<CustomerOrderItem> items = orderItemService.getAllOrderItemsByOrder(order);
-        Integer totalCost = 0;
+        int totalCost = 0;
         for(CustomerOrderItem orderItem : items) {
             totalCost += orderItem.getProduct().getCost() * orderItem.getQuantity();
         }
 
         return totalCost;
-
     }
 }
