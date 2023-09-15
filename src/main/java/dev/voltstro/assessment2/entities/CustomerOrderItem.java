@@ -11,16 +11,21 @@ public class CustomerOrderItem implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public Long getId() {
-        return id;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false)
     private CustomerOrder customerOrder;
+
+    @ManyToOne(optional = false)
+    private Product product;
+
+    private int quantity;
+
+    public Long getId() {
+        return id;
+    }
 
     public CustomerOrder getCustomerOrder() {
         return customerOrder;
@@ -45,9 +50,4 @@ public class CustomerOrderItem implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-    @ManyToOne(optional = false)
-    private Product product;
-
-    private int quantity;
 }

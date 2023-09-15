@@ -16,6 +16,11 @@ public class CustomerOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(optional = false)
+    private Customer customer;
+
+    private Date createdDate;
+
     public Customer getCustomer() {
         return customer;
     }
@@ -23,9 +28,6 @@ public class CustomerOrder implements Serializable {
     public void setCustomer(Customer customerId) {
         this.customer = customerId;
     }
-
-    @OneToOne(optional = false)
-    private Customer customer;
 
     public Date getCreatedDate() {
         return createdDate;
@@ -35,15 +37,13 @@ public class CustomerOrder implements Serializable {
         this.createdDate = createdDate;
     }
 
-    private Date createdDate;
+    public Long getId() {
+        return id;
+    }
 
     public CustomerOrder copyFrom(CustomerOrder order) {
         this.customer = order.customer;
         this.createdDate = order.createdDate;
         return this;
-    }
-
-    public Long getId() {
-        return id;
     }
 }
