@@ -16,7 +16,7 @@ public class CustomerOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Customer customer;
 
     private Date createdDate;

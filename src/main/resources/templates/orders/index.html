@@ -3,7 +3,52 @@
       layout:decorate="~{_layout.html}">
 <body>
 <section layout:fragment="content">
+    <div class="container">
+        <div class="card mt-3">
+            <h6 class="card-header">Orders</h6>
+            <div class="card-body">
+                <div class="row">
+                    <!--
+                    <form class="d-flex col-10" th:object="${search}" th:action="@{/products/}" method="GET" >
+                        <input class="form-control me-2" type="search" placeholder="Search by name" name="search" th:value="${search}">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </form>
+                    -->
+                    <div class="d-flex col-10"></div>
 
+                    <div class="col-2">
+                        <a class="btn btn-primary d-block" href="/orders/edit/">Add</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="order: ${orders}">
+                        <td th:text="${order.id}"></td>
+                        <td th:text="${order.createdDate}"></td>
+                        <td th:text="${order.customer.firstName + ' ' + order.customer.lastName}"></td>
+                        <td>
+                            <a th:href="@{/orders/edit/{id}/ (id=${order.id})}" class="btn btn-outline-primary">Edit</a>
+                            <a th:href="@{/orders/edit/{id}/ (id=${order.id})}" class="btn btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
 </section>
 </body>
 </html>

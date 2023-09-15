@@ -32,7 +32,15 @@ public class OrderController {
     }
 
     @GetMapping("/orders/")
-    public String index() {
+    public String index(@RequestParam(required = false) Long customerId, Model model) {
+
+        List<CustomerOrder> orders;
+        if(customerId == null)
+            orders = orderService.getAllOrders();
+        else
+            orders = orderService.getAllOrders(customerId);
+
+        model.addAttribute("orders", orders);
         return "orders/index";
     }
 

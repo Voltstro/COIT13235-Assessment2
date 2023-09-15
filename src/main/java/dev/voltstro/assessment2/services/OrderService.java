@@ -1,5 +1,6 @@
 package dev.voltstro.assessment2.services;
 
+import dev.voltstro.assessment2.entities.Customer;
 import dev.voltstro.assessment2.entities.CustomerOrder;
 import dev.voltstro.assessment2.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,9 @@ public class OrderService {
 
     public List<CustomerOrder> getAllOrders() {
         return orderRepository.findAll();
+    }
+
+    public List<CustomerOrder> getAllOrders(Long customerId) {
+        return orderRepository.findOrderByCustomerId(customerId);
     }
 }

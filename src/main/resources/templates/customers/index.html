@@ -35,8 +35,9 @@
                         <td th:text="${customer.firstName}"></td>
                         <td th:text="${customer.lastName}"></td>
                         <td>
+                            <a th:href="@{/orders/(customerId=${customer.id})}" class="btn btn-outline-primary">Orders</a>
                             <a th:href="@{/customers/edit/{id}/ (id=${customer.id})}" class="btn btn-outline-primary">Edit</a>
-                            <a th:href="@{/customers/edit/{id}/ (id=${customer.id})}" class="btn btn-outline-primary">Delete</a>
+                            <a th:href="@{/customers/edit/{id}/ (id=${customer.id})}" class="btn btn-outline-danger">Delete</a>
                         </td>
                     </tr>
                     </tbody>
