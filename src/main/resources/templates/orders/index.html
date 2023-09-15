@@ -27,8 +27,9 @@
                     <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Created Date</th>
                         <th scope="col">Customer</th>
+                        <th scope="col">Total Cost</th>
+                        <th scope="col">Created Date</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -36,8 +37,9 @@
                     <tbody>
                     <tr th:each="order: ${orders}">
                         <td th:text="${order.id}"></td>
-                        <td th:text="${order.createdDate}"></td>
                         <td th:text="${order.customer.firstName + ' ' + order.customer.lastName}"></td>
+                        <td th:text="${order.totalCost}"></td>
+                        <td th:text="${order.createdDate}"></td>
                         <td>
                             <a th:href="@{/orders/edit/{id}/ (id=${order.id})}" class="btn btn-outline-primary">Edit</a>
                             <a th:href="@{/orders/delete/{id}/ (id=${order.id})}" class="btn btn-outline-danger">Delete</a>

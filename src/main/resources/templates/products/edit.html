@@ -37,11 +37,23 @@
                       placeholder="Enter Product Name"
               />
             </div>
+
+            <!-- Product Cost -->
+            <div class="col-6">
+              <label for="product-cost">Product Cost</label>
+              <input
+                      id="product-cost"
+                      type="number"
+                      name="cost"
+                      th:field="*{cost}"
+                      class="form-control"
+                      placeholder="Enter Product Cost"
+              />
+            </div>
           </div>
 
           <!-- Enabled -->
           <div class="mb-3 form-check form-switch">
-
             <input
                     checked
                     id="enabled"
@@ -54,6 +66,8 @@
             />
             <label class="form-check-label" for="enabled">Enabled</label>
           </div>
+
+
 
           <div>
             <button type="submit" class="btn btn-primary">Save</button>

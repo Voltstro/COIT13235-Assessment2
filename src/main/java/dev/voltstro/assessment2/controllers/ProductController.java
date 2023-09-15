@@ -51,6 +51,7 @@ public class ProductController {
         //If new product, then set returnUrl to have no ID in it, and product to new
         if(isNew) {
             product = new Product();
+            product.setEnabled(true);
             returnUrl = "/products/edit/";
         } else { //Existing product, set product and returnUrl accordingly
             product = productsService.getProductById(id);

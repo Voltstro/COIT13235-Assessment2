@@ -3,10 +3,13 @@ package dev.voltstro.assessment2.entities;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+
+import static jakarta.persistence.TemporalType.DATE;
 
 @Entity
 @Table(name="customer_order")
@@ -22,7 +25,17 @@ public class CustomerOrder implements Serializable {
     @ManyToOne(optional = false)
     private Customer customer;
 
+    @Temporal(DATE)
+    @DateTimeFormat(pattern="dd-MMM-YYYY")
     private Date createdDate;
+
+    private Integer totalCost;
+
+    private boolean fulfilled;
+
+    public Long getId() {
+        return id;
+    }
 
     public Customer getCustomer() {
         return customer;
@@ -40,13 +53,26 @@ public class CustomerOrder implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Long getId() {
-        return id;
+    public Integer getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(Integer totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public boolean isFulfilled() {
+        return fulfilled;
+    }
+
+    public void setFulfilled(boolean fulfilled) {
+        this.fulfilled = fulfilled;
     }
 
     public CustomerOrder copyFrom(CustomerOrder order) {
         this.customer = order.customer;
-        this.createdDate = order.createdDate;
+        this.totalCost = order.totalCost;
+        this.fulfilled = order.fulfilled;
         return this;
     }
 }

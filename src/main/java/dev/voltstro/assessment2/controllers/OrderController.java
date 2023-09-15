@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Controller for order endpoints (/order/**)
+ */
 @Controller
 public class OrderController {
 
@@ -65,6 +68,7 @@ public class OrderController {
         //If new order, then set returnUrl to have no ID in it, and product to new
         if(isNew) {
             order = new CustomerOrder();
+            order.setTotalCost(0);
             returnUrl = "/orders/edit/";
         } else { //Existing order, set order and returnUrl accordingly
             order = orderService.getOrderById(id);
@@ -76,7 +80,11 @@ public class OrderController {
 
             //Get all products
             model.addAttribute("products", productsService.getAllEnabledProducts());
-            model.addAttribute("newProduct", new NewProductModel());
+
+            //Model, for submitting new items
+            NewProductModel productModel = new NewProductModel();
+            productModel.setQuantity(1);
+            model.addAttribute("newProduct", productModel);
 
             //Get all order items
             model.addAttribute("orderItems", orderItemService.getAllOrderItemsByOrder(order));
@@ -136,8 +144,11 @@ public class OrderController {
         newOrderItem.setCustomerOrder(order);
         newOrderItem.setProduct(product);
         newOrderItem.setQuantity(productModel.getQuantity());
-
         orderItemService.saveOrderItem(newOrderItem);
+
+        //Update total cost
+        order.setTotalCost(calculateOrderTotalCost(order));
+        orderService.saveOrder(order);
 
         return "redirect:/orders/edit/" + order.getId() + "/";
     }
@@ -147,11 +158,33 @@ public class OrderController {
      */
     @GetMapping("/orders/edit/{orderId}/products/remove/{orderItemId}/")
     public String removeProduct(@PathVariable Long orderId, @PathVariable Long orderItemId) {
-        orderItemService.removeOrderItem(orderItemId);
+        //Get order item
+        CustomerOrder order = orderService.getOrderById(orderId);
+
+        //Order is not valid
+        if(order == null)
+            return "redirect:/orders/";
+
+        //Get order item
+        CustomerOrderItem orderItem = orderItemService.getOrderItemById(orderItemId);
+
+        //Order item is not valid
+        if(orderItem == null)
+            return "redirect:/orders/";
+
+        //Remove order item
+        orderItemService.removeOrderItem(orderItem);
+
+        //Update total cost
+        order.setTotalCost(calculateOrderTotalCost(order));
+        orderService.saveOrder(order);
 
         return "redirect:/orders/edit/" + orderId + "/";
     }
 
+    /**
+     * Order delete endpoint
+     */
     @GetMapping("/orders/delete/{orderId}/")
     public String deleteOrder(@PathVariable Long orderId, Model model) {
         CustomerOrder order = orderService.getOrderById(orderId);
@@ -164,9 +197,27 @@ public class OrderController {
         return "/orders/delete";
     }
 
+    /**
+     * Order delete confirmed endpoint
+     */
     @GetMapping("/orders/delete/{orderId}/confirm/")
     public String deleteOrderConfirm(@PathVariable Long orderId) {
         orderService.deleteOrder(orderId);
         return "redirect:/orders/";
+    }
+
+    private Integer calculateOrderTotalCost(CustomerOrder order) {
+
+        //We will recalculate total cost from scratch ever single time.
+        //If a Product changes it cost, minus/adding will have issues
+        //This guarantees it to be accurate
+        List<CustomerOrderItem> items = orderItemService.getAllOrderItemsByOrder(order);
+        Integer totalCost = 0;
+        for(CustomerOrderItem orderItem : items) {
+            totalCost += orderItem.getProduct().getCost() * orderItem.getQuantity();
+        }
+
+        return totalCost;
+
     }
 }

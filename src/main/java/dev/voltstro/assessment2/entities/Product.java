@@ -17,9 +17,8 @@ public class Product implements Serializable {
     private Long id;
 
     private String code;
-
     private String name;
-
+    private Integer cost;
     private boolean enabled;
 
     public Long getId() {
@@ -42,6 +41,14 @@ public class Product implements Serializable {
         return name;
     }
 
+    public Integer getCost() {
+        return cost;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -53,6 +60,7 @@ public class Product implements Serializable {
     public Product copyFrom(Product product){
         this.name = product.name;
         this.code = product.code;
+        this.cost = product.cost;
         this.enabled = product.enabled;
         return this;
     }

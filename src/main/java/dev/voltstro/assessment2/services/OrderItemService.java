@@ -33,7 +33,7 @@ public class OrderItemService {
         return orderItemRepository.findOrderItemsByOrderId(order.getId());
     }
 
-    public void removeOrderItem(Long itemId) {
-        orderItemRepository.deleteById(itemId);
+    public void removeOrderItem(CustomerOrderItem item) {
+        orderItemRepository.delete(item);
     }
 }
